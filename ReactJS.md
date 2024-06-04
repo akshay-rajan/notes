@@ -70,7 +70,17 @@ The `render` method takes a *single* HTML element and displays it inside another
 
 JSX is a Syntax Extension of JavaScript. In React, we combine elements, styles and behaviour together.
 
+To insert JavaScript `expression` inside the html, use `{}`
 ```javascript 
+const name = "Neo";
+ReactDOM.render(<h1>Hello, {name}!</h1>, document.getElementById("root"));
 
+ReactDOM.render(<p>Hello, {34 + 82}!</p>, document.getElementById("root"));
+
+ReactDOM.render(<p>Hello, {`Mr. ${name}!`}!</p>, document.getElementById("root"));
 ```
+
+We cannnot insert JavaScript `statements` - loops, conditionals etc. like above.
+
+
 
