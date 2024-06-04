@@ -96,4 +96,50 @@ To use inline styles, we need to represent the values as a JavaScript object. Th
 ReactDOM.render(<p style={{ color: "red" }}>Hey</p>, document.getElementById("root"));
 ```
 
+### [Style Guide for React](https://airbnb.io/javascript/react/)
 
+## React Components
+
+Start with a function with name in PascalCase
+
+```jsx
+function Heading() {
+  return <h1>Good Morning</h1>;
+}
+```
+This is a component. We can use it while rendering the page by
+```jsx
+ReactDOM.render(
+  <div>
+    <Heading />
+    ...
+```
+The componets should be separated into individual files with the extension `.jsx` and leave the `index.js` just as it is. 
+
+Inside `Heading.jsx`, do
+```jsx
+import React from "react";
+
+function Heading() {
+  return <h1>Good Morning</h1>;
+}
+
+export default Heading;
+```
+To use a component, we have to just import it.
+
+```jsx
+import Heading from "./Heading";
+```
+Usually, we only render one component: `App` in the `index.js` file, and in a component named `App.jsx`, we include all the import statements and the rendering logic. 
+
+```jsx
+```
+```jsx
+```
+```jsx
+```
+```jsx
+```
+```jsx
+```
