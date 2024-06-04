@@ -55,7 +55,7 @@ React works by these `.jsx` files. These files have HTML in a JavaScript file. T
 
   <body>
     <div id="root"></div>
-    <script src="../src/index.js" type="text/javascript"></script>
+    <script src="../src/index.js" type="text/JSX"></script>
   </body>
 </html>
 ```
@@ -82,5 +82,18 @@ ReactDOM.render(<p>Hello, {`Mr. ${name}!`}!</p>, document.getElementById("root")
 
 We cannnot insert JavaScript `statements` - loops, conditionals etc. like above.
 
+Attributes in JSX must be in **camelCase**.
+
+```jsx 
+ReactDOM.render(<p className="heading">Hey</p>, document.getElementById("root"));
+```
+
+Best way to style the elements is to add classes to elements using `className` and describe the styles for the classes in a `CSS` file.
+
+To use inline styles, we need to represent the values as a JavaScript object. The css properties must be converted from kebab-case to camelCase (font-size to fontSize).
+
+```jsx
+ReactDOM.render(<p style={{ color: "red" }}>Hey</p>, document.getElementById("root"));
+```
 
 
