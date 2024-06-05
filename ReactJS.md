@@ -157,8 +157,37 @@ We can use them just like using HTML attributes.
     id="1562323"
   />
 ```
+
+## Map
+
+Map is used to generate multiple components. We apply the `map` method to a list of JavaScript objects, and it takes a function as an argument. The function is applied to each object in the list of objects
+
+    listOfObjects.map(myFunction);
+
 ```jsx
+function createCard(contact) {
+  return (
+    <Card
+      key={contact.id}
+      name={contact.name}
+      img={contact.imgURL}
+      tel={contact.phone}
+      email={contact.email}
+    />
+  );
+}
+function App() {
+  return (
+    <div>
+      <h1 className="heading">My Contacts</h1>
+      {contacts.map(createCard)}
+    </div>
+  );
+}
 ```
+
+React creates a virtual DOM to represent the components. Each component rendered using a method like `map` should have a unique field named `key`.
+
 ```jsx
 ```
 ```jsx
