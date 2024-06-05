@@ -223,6 +223,8 @@ let indexOfFirstEven = nums.findIndex(function (x) {
   return x % 2 == 0;
 });
 ```
+
+
 ```jsx
 ```
 ```jsx

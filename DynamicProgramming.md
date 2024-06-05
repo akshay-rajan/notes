@@ -361,5 +361,131 @@ public int countConstruct(String target, List<String> wordbank, Map<String, Inte
 }
 ```
 
+### allConstruct
+
+Problem: Return the collection of all ways in which the target string can be constructed.
+
 ```java 
+public List<List<String>> allConstruct(String target, List<String> wordbank) {
+    List<List<String>> result = new ArrayList<>();
+
+    if (target.isEmpty()) return result;
+
+    for (String word: wordbank) {
+        if (target.indexOf(word) == 0) {
+            String suffix = target.substring(0, word.length());
+            // The function returns a 2D array
+            List<List<String>> suffixWays = allConstruct(suffix, wordbank);
+            for (List<String> way: suffixWays) {
+                suffixWays.insert(0, way);
+            }
+            result.addAll(suffixWays);
+        }
+    }
+    return result;
+}
+```
+```java 
+public List<List<String>> allConstruct(String target, List<String> wordbank, Map<String, List<List<String>>> memo) {
+    List<List<String>> result = new ArrayList<>();
+
+    if (target.isEmpty()) return result;
+    
+    if (memo.contains(target)) return memo.get(target);
+
+    for (String word: wordbank) {
+        if (target.indexOf(word) == 0) {
+            String suffix = target.substring(0, word.length());
+            // The function returns a 2D array
+            List<List<String>> suffixWays = allConstruct(suffix, wordbank, memo);
+            for (List<String> way: suffixWays) {
+                suffixWays.insert(0, way);
+            }
+            result.addAll(suffixWays);
+        }
+    }
+    memo.put(target, result);
+    return result;
+}
+```
+
+## Tabluation
+
+Tabluation or Pure Dynamic Programming combines storage and iteration, whereas memoization combines storage and recursion.
+
+We store the results of each sub problem in a table.
+
+### fib
+
+```java 
+int fib(int n) {
+    if (n <= 1) return n;
+    // Initialize a table. In Java, this table is filled with 0
+    int[] dp = new int[n + 1];
+    
+    // Base Case: n = 0 or 1
+    dp[1] = 1;
+
+    // Iteration
+    for (int i = 2; i <= n; i++) {
+        dp[i] = dp[i - 1] + dp[i - 2];
+    }
+
+    return dp[n];
+}
+```
+
+This method is of `O(n)` time and space complexities. We may optimize this particular problem by using constant space.
+
+### gridTraveler
+
+```java 
+boolean gridTraveler(int m, int n) {
+    
+    int[][] dp = new int[m + 1][n + 1];
+
+    // Only one way to traverse 1x1 grid    
+    dp[1][1] = 1;
+
+    // Iteration
+    for (int i = 0; i <= m; i++) {
+        for (int j = ; j <= n; j++) {
+            int[] curr = dp[i][j]
+            if (j + 1 <= n) dp[i][j + 1] += curr; // Update right
+            if (i + 1 <= m) dp[i + 1][j] += curr; // Update bottom
+        }
+    }
+
+}
+```
+```java 
+// Recursive Implementation
+int gridTraveler(int m, int n) {
+    // Base Case
+    if (m == 1 && n == 1) return 1;
+    if (m == 0 || n == 0) return 0;
+    // Recursive call
+    return gridTraveler(m - 1, n) + gridTraveler(m, n - 1);
+}
+```
+```java 
+
+```
+```java 
+
+```
+```java 
+
+```
+```java 
+
+```
+```java 
+
+```
+```java 
+
+```
+```java 
+
 ```
