@@ -188,6 +188,57 @@ function App() {
 
 React creates a virtual DOM to represent the components. Each component rendered using a method like `map` should have a unique field named `key`.
 
+### Filter & Reduce
+
+The **Filter** method *filters* an array and only keeps the elements that meet a particular criteria (predicate).
+
+The **Reduce** method accumulates a value by applying a function to each item in an array.
+
+```jsx
+// Map: Double each element
+let newNums = nums.map(function (x) {
+  return x * 2;
+});
+// Filter: Only keep numbers that are < 10
+let newNums = nums.filter(function (x) {
+  return x < 10;
+});
+// Reduce: Sum an array
+let newNums = nums.reduce(function (accumulator, curr) {
+  accumulator += curr;
+});
+```
+
+### Find & FindIndex
+
+These are functions introduced newly, which lets us find the first item that satisfies a condition, and find the index of the first item satisfying the condition, respectively.
+
+```jsx
+// Find
+let fistNoGT10 = nums.find(function (x) {
+  return x > 10;
+})
+// Find Index
+let indexOfFirstEven = nums.findIndex(function (x) {
+  return x % 2 == 0;
+});
+```
+```jsx
+```
+```jsx
+```
+```jsx
+```
+```jsx
+```
+```jsx
+```
+```jsx
+```
+```jsx
+```
+```jsx
+```
 ```jsx
 ```
 ```jsx
