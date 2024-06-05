@@ -133,9 +133,29 @@ import Heading from "./Heading";
 ```
 Usually, we only render one component: `App` in the `index.js` file, and in a component named `App.jsx`, we include all the import statements and the rendering logic. 
 
+## Props
+
+Props are arguments passed to React components. They are passed via HTML attributes.
+
+We can use props by passing them to a component. They are treated as JavaScript objects.
 ```jsx
+function Card(props) {
+  return (
+    <img src={props.img} alt="alt">
+    <h1>{props.name}</h1>
+    <h3>{props.id}</h3>
+  );
+}
 ```
+We can use them just like using HTML attributes.
+
 ```jsx
+  ...
+  <Card 
+    img="https://www.picsum.com/200"
+    name="Neo"
+    id="1562323"
+  />
 ```
 ```jsx
 ```
