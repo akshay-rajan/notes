@@ -1,4 +1,4 @@
-![alt text](docker-logo.png)
+![alt text](./files/docker-logo.png)
 
 Docker is a tool for **containerization**. 
 Hypervisors / Virtual Machines can isolate and run multiple operating systems on a single machine. But it has fixed resource allocation. That's where docker comes in.
