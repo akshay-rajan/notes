@@ -468,18 +468,106 @@ int gridTraveler(int m, int n) {
     return gridTraveler(m - 1, n) + gridTraveler(m, n - 1);
 }
 ```
-```java 
 
-```
-```java 
+### Steps for DP
 
-```
-```java 
+1. Visualize the problem as a table
+2. Create a table based on the input size
+3. Initialize the table with default values
+4. Seed the base case / trivial values into the table
+5. Iterate through the table
+6. Fill further positions based on current position
 
-```
-```java 
+### canSum
 
+<img src="image-8.png" alt="alt text" style="height: 200px">
+
+```java 
+boolean canSum(int targetSum, int[] nums) {
+    // Create an array of size targetSum + 1
+    boolean[] dp = new boolean[targetSum + 1];
+
+    // We can generate a sum of 0 by taking NO elements
+    dp[0] = true;
+   
+    // Iterate through the table
+    for (int i = 0; i <= targetSum; i++) {
+        // If the current element is false, move on
+        if (dp[i] == false) continue;
+        // True means, we can generate this number by summing the array
+        // For each number in nums,
+        for (int num: nums) {
+            // If we can generate the current number, we can also generate current + num
+            if (i + num <= targetSum) 
+                dp[i + num] = true;
+        }
+    }
+    return dp[targetSum];
+}
 ```
+
+### howSum
+
+<img src="image-9.png" alt="alt text" style="height: 200px">
+
+```java 
+List<Integer> howSum(int targetSum, int[] nums) {
+    // Create an array 
+    List<List<Integer>> dp = new ArrayList<>();
+    // Fill the array with null, meaning it's impossible to obtain targetSum
+    for (int i = 0; i <= targetSum; i++) {
+        dp.add(i, null);
+    }
+
+    // We can generate a sum of 0 by taking NO elements
+    // Hence if targetSum is 0, we should return an empty array
+    dp.add(0, new ArrayList<>());
+   
+    // Iterate through the table
+    for (int i = 0; i <= targetSum; i++) {
+        if (dp.get(i) == null) continue;
+        // For each number in nums,
+        for (int num: nums) {
+            if (i + num <= targetSum) 
+                // Fill that position in the table
+                // also including the value at the current pos
+                dp.put(i + num, dp.get(i).add(num));
+        }
+    }
+    return dp.get(targetSum);
+}
+```
+
+### bestSum
+
+```java 
+List<Integer> bestSum(int targetSum, int[] nums) {
+    List<List<Integer>> dp = new ArrayList<>();
+    
+    for (int i = 0; i <= targetSum; i++) dp.add(i, null);
+
+    dp.add(0, new ArrayList<>());
+   
+    // Iterate through the table
+    for (int i = 0; i <= targetSum; i++) {
+        if (dp.get(i) == null) continue;
+        for (int num: nums) {
+            if (i + num <= targetSum) {
+                List<Integer> present = dp.get(i + num); 
+                List<Integer> newArr = dp.get(i).add(num);
+                // If the cell was previously filled (!null)
+                // Only replace, if the new combination is shorter
+                if (present != null && present.size() > newArr.size())
+                    dp.put(i + num, newArr);
+            }
+        }
+    }
+    return dp.get(targetSum);
+}
+```
+
+### canConstruct
+
 ```java 
 
 ```
