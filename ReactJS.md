@@ -259,10 +259,38 @@ Arrow functions are a concise way of representing functions. They utilize the 'f
   ))}
   ...
 ```
+
+## Conditional Rendering
+
+Conditional rendering is done using the ternary operator
+
+    condition ? if_true : if_false
+
+We cannot include JavaScript statements inside components rendered, using `{}` since they only support expressions. But since ternary operators are expressions, we can use them.
+
 ```jsx
+let isLoggedIn = false;
+
+function App() {
+  return (
+    <div className="container">
+      {isLoggedIn ? <h1>Hello</h1> : <Login />}
+    </div>
+  );
+}
 ```
+
+To show something only when a condition is satisfied, we can use `null`, or the 'and' operator: `&&`
+
 ```jsx
+{isLoggedIn ? <h1>Hello</h1> : null}
+// OR
+{isLoggedIn && <h1>Hello</h1>} 
+// Condition && Expression
 ```
+
+`&&` works as the Guard Operator, preventing the expression evaluation unless the condition is true.
+
 ```jsx
 ```
 ```jsx
