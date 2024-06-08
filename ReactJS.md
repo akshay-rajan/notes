@@ -19,10 +19,11 @@ The individual components are re-rendered when changes occur.
         cd my-react-app
         npm install
         ```
-    - Start the development server.
+    - Start the deployment server.
         ```
         npm run dev
         ```
+    There is one other way, which is to use `npm create-react-app myApp`, which might take longer.
     - Open the app on the browser by heading over to 
     http://localhost:5173/
 
@@ -66,6 +67,20 @@ import ReactDOM from "react-dom";
 
 ReactDOM.render(<h1>Hello, world!</h1>, document.getElementById("root"));
 ```
+
+---
+
+### <div style="color:red"> !! The `ReactDOM.render()` method was marked 'deprecated' in React 18 and the new way is to use `ReactDOM.createRoot().render()`:</div>
+
+```javascript
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <h1>Hello, world!</h1>
+);
+```
+
+---
+
 The `render` method takes a *single* HTML element and displays it inside another element.
 
 JSX is a Syntax Extension of JavaScript. In React, we combine elements, styles and behaviour together.
@@ -160,9 +175,11 @@ We can use them just like using HTML attributes.
 
 ## Map
 
-Map is used to generate multiple components. We apply the `map` method to a list of JavaScript objects, and it takes a function as an argument. The function is applied to each object in the list of objects
+Map is used to generate multiple components. We apply the `map` method to a list of JavaScript objects, and it takes a function as an argument. The function is applied to each object in the list of objects.
 
     listOfObjects.map(myFunction);
+
+We can use `map` to create repeating elements.
 
 ```jsx
 function createCard(contact) {
@@ -186,7 +203,8 @@ function App() {
 }
 ```
 
-React creates a virtual DOM to represent the components. Each component rendered using a method like `map` should have a unique field named `key`.
+React creates a virtual DOM to represent the components. To create this, 
+**Each component rendered using a method like `map` should have a unique field named `key`.**
 
 ### Filter & Reduce
 
@@ -224,8 +242,22 @@ let indexOfFirstEven = nums.findIndex(function (x) {
 });
 ```
 
+### Arrow Functions
+
+Arrow functions are a concise way of representing functions. They utilize the 'fat arrow' notation: `=>`. We can use them along with `map` and `filter` to render repeated components.
 
 ```jsx
+// Suppose we have a list 'notes' and want to render the 'Note' component for each note
+  ...
+  <Header />
+  {notes.map((note) => (
+    <Note 
+      key={note.key}
+      title={note.title}
+      content={note.content}
+      />
+  ))}
+  ...
 ```
 ```jsx
 ```
