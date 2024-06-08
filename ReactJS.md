@@ -317,6 +317,51 @@ function increment() {
   setCount(count + 1);
 }
 ```
+
+We can use React to make the components responsive, by integrating with HTML events like `onClick`, `onMouseOver`, `onMouseOut` etc.
+[(HTML Events Reference)](https://www.w3schools.com/tags/ref_eventattributes.asp)
+
+```jsx
+let normalStyle = { "background-color": "white" };
+let hoverStyle = { "background-color": "black" };
+
+function hoverEffect() {
+  setButtonStyle(hoverStyle);
+}
+function removeHoverEffect() {
+  setButtonStyle(normalStyle);
+}
+return (
+  <button
+    onMouseOver={hoverEffect}
+    onMouseOut={removeHoverEffect}
+    style={buttonStyle}
+  >
+  ...
+```
+While handling events, we can obtain the event itself as an attribute, just like vanilla JS.
+
+```jsx
+// Using event 'onChange' on an input field
+function handleChange(event) {
+  setName(event.target.value);
+}
+```
+
+We can use a single `useState()` to control multiple states using an object.
+
+```jsx
+const [fullName, setFullName] = useState({
+  fname: "Akshay",
+  lname: "Rajan",
+});
+```
+```jsx
+```
+```jsx
+```
+```jsx
+```
 ```jsx
 ```
 ```jsx
