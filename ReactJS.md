@@ -291,11 +291,31 @@ To show something only when a condition is satisfied, we can use `null`, or the 
 
 `&&` works as the Guard Operator, preventing the expression evaluation unless the condition is true.
 
+## State & Hooks
+
+`UI = f(State)`
+
+A **state** is a JavaScript object that stores data and can change over time and affect how a component renders. State is local to the component that defines it, and changes to the state can only be made by that component.
+
+**Hooks** are functions that allow us to manipulate the state of a component. The most commonly used hook is `useState`. Hooks can only be used inside a function's body.
+
 ```jsx
+const state = React.useState(0);
 ```
+
+The `useState()` method returns an array with the argument as the initial value (initial state), along with a function. 
+We can use *Destructuring* to access the value and function separately.
+
 ```jsx
+const [count, setCount] = React.useState(0);
 ```
+
+Now, the `count` variable stores the state, 0, and the `setCount` can be used to update state. 
+
 ```jsx
+function increment() {
+  setCount(count + 1);
+}
 ```
 ```jsx
 ```
