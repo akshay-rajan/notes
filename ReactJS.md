@@ -355,10 +355,55 @@ const [fullName, setFullName] = useState({
   fname: "Akshay",
   lname: "Rajan",
 });
+// fullName is an object with value {fname: "Akshay",lname: "Rajan"}
 ```
+
+We can update the state conditionally by accessing the previous state of the component like this;
+
 ```jsx
+setFullName(prevValue => { // prevValue is the previous state
+  if (name === "fName") {
+    return {
+      fName: value,
+      lName: prevValue.lName
+    };
+  } else if (name === "lName") {
+    return {
+      fName: prevValue.fName,
+      lname: value
+    };
+  }
+});
 ```
+
+* The ES6 *Spread* operator `...` can spread or expand an or object.
+
+  ```js
+  let arr1 = ["apple", "banana"];
+  let arr2 = ["pineapple",...arr1, "mango"];
+  // arr2 becomes ["pineapple", "apple", "banana", "mango"]
+
+  let name = {fname: "John", lname: "Doe"};
+  let user = {    // 'user' now contains the 2 attributes
+    ...name,      // 'fname' and 'lname' in the 'name' object
+    id: 1,
+  };
+  ```
+
+We can use the `spread` operator in React code to avoid repetition.
+
 ```jsx
+function handleChange(event) {
+  const { name, value } = event.target;
+
+  setContact((prevValue) => {
+    return { 
+      ...prevValue, // Keeps the previous values
+      [name]: value, // The 'name' must be inserted as an array
+      // Otherwise it will be interpreted as a string
+    };
+  });
+}
 ```
 ```jsx
 ```
