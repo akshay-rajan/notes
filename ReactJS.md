@@ -405,13 +405,19 @@ function handleChange(event) {
   });
 }
 ```
+
+> We can pass in the index of an array as the `key`, while using `map`, like
+  
 ```jsx
+{items.map((data, index) => <ToDoItem key={index} data={data} />)}
 ```
+
+We are able to not only pass data, but also functions as `props`. This allows us to maipulate components like deleting an Item from a List.
+
+### Material UI
+
+A library of pre-built React components based on the Google, Material design.
+
 ```jsx
-```
-```jsx
-```
-```jsx
-```
-```jsx
+npm install @mui/material @emotion/react @emotion/styled
 ```
