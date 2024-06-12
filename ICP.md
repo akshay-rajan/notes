@@ -32,36 +32,76 @@ Now we have the Distributed Trustless Ledger.
 Not only can we store data, but also we can create **Smart Contracts**: storing code inside a blockchain.
 This allows for features like automating transactions when a particular condition, like reaching sufficient profit, is met.
 
-# dApps - Decentralized Applications
+## dApps - Decentralized Applications
 
 dApps are the backbone of Web3. 
-In this, we can build the technology, release tokens to public or to funds and raise money, and the companies can be run by DAOs (Decentralized Autonomous Organizations) which are users that hold special tokens named Governance Tokens.
+In this, we can build the technology, release tokens to public or to funds and raise money, and the companies can be run by **DAO**s (Decentralized Autonomous Organizations) which are users that hold special tokens named Governance Tokens.
 
 *Pseudonimity* refers to how a user can be recognized by their id or username, but the actual identity remains hidden.
 
 Ethereum is the most commonly used blockchain for dApps, but it has certain demerits like very high expense (gas price) on computation. 
 The **Internet Computer** is a scalable cloud computer that runs on a blockchain. It can perform fast computations and store data directly on the chain.
 
-# Internet Computer
+# Internet Computer 
 
-The goal of the Internet Computer is to reach **Blockchain Singularity**.
+![alt text](./files/ic.png)
+
+- [internetcomputer.org](https://internetcomputer.org/)
+- [Documentation](https://internetcomputer.org/docs/current/developer-docs/)
+- [Developer Journey](https://internetcomputer.org/docs/current/tutorials/developer-journey/) 
+
+The Internet Computer Protocol is a blockchain designed to give smart contracts near-native performance and scalability, while maintaining the security of decentralized execution.
+In addition to classical DeFi (Decentralized Finance) applications such as Ledgers and Exchanges, ICP can run computationally and storage-wise heavy applications like 
+
+The goal of the Internet Computer is to reach *Blockchain Singularity*.
 The entire base layout of the Web in one single blockchain.
 
 Today's dApps are only partially decentralized. 
-Small amount of data is on a secure blockchain, meanwhile majority of the data is stored in Web2 companies like Asure / AWS or relies on Chrome Extensions. 
-These companies have authority over these dApps. 
+Small amount of data is on a secure blockchain, meanwhile majority of the data is stored in Web2 companies like Azure / AWS or relies on Chrome Extensions.
+These companies have authority over these dApps.
 Current blockchains are extremely difficult to be able to host large amount of data or transactions.
-The TPS (Transactions Per Second) limits the usage of the applications.
+The low TPS (Transactions Per Second) limits the usage of the applications.
 
 The Dfinity introduced a novel consensus algorithm named *Threshold Relay* which allows the Internet Computer to read much faster.
-IC aggregates the computing capacity of a large number of independent data centres and combines them using the `Internet Computer Protocol` into a large decentralized World Computer.
-The decentralized computer is organized into **Canisters**, which can run processes and store data.
-As a user you can tap into a canister by making an HTTPS request. 
-The IC is a group of canisters, where each canister can hold programs and program states through *WebAssembly* Module and *Memory Page*.
+IC aggregates the computing capacity of a large number of independent *data centres* and combines them using the *Internet Computer Protocol* into a large decentralized *World Computer*.
+The decentralized computer is organized into **Canisters**, which are simply **Smart Contracts**, that can run processes and store data.
+Each canister is hosted on an independent blockchain network running on **nodes** called a **subnet**.
+As a user you can interact with a canister by making an HTTPS request. 
+
+The IC is a group of canisters, where each canister can hold programs and program states through **WebAssembly** *(Wasm)* (a binary instruction format, to which Motoko/Rust code is compiled to, and executed in the Wasm runtime provided by the IC network) Module and *Memory Page* (a fixed-size block of memory (64KB) used for managing memory allocation of a Wasm module (canister)).
 
 We can write code to run web applications in WebAssembly using languages such as Rust, Motoko etc. 
 The program states can be stored within the canister, similar to containers (e.g. Docker), but the **program state gets preserved** (runs forever). 
 Thus, we don't have to worry about storage and we only have to think about the logic of the program. 
+
+The Internet Computer Protocol is a **4 layer technology stack** that runs on the nodes of each subnet. Each subnet is capable of running a blockchain-based *Replicated State Machine* which is able to operate independently of other subnets while communicating asynchronously with them.
+Each subnet processes messages, which are recieved from end users or other subnets.
+The 4 layers are:
+
+<table>
+    <tr>
+        <td><img src="./files/icp-overview.png" alt="overview" style="max-height:700px;"></td>
+        <td>
+            <ol>
+                <h3><li>Peer to Peer</li></h3>
+                Responsible for communication between nodes within a subnet. <br/>
+                Nodes on a subnet can broadcast messages, known as <i>artifacts</i> to all nodes in the subnets. 
+                This is an asynchronous communication network.
+                <h3><li>Consensus</li></h3>
+                This layer is responsible for assuring that all nodes in a subnet agree on the messages that are processed and their order of processing. <br/>
+                It provides <i>cryptographically guaranteed finality</i>.
+                <h3><li>Message Routing</li></h3>
+                Recieves a block of messages from the consensus layer and places them into the input queues of their associated target canisters - <b>Induction</b>.<br/>
+                This triggers the execution process.<br/>
+                <h3><li>Execution</li></h3>
+                Execution layer is responsible for executing the canister smart contract code.<br/>
+                The Wasm virtual machine running on each node is responsible for this process.<br/>
+                Messages are executed until there are no more messages in the queue, or the cycles limit has been reached. <br/>
+            </ol>
+        </td>
+    </tr>
+</table>
+
 
 ## [Installation and Setup](./Installation+and+Setup+for+Windows.pdf)
 
@@ -140,22 +180,37 @@ dfx deploy
 ```
 Now the project is deployed to the local network.
 
-## MOTOKO
+# MOTOKO
 
-Motoko is a programming language designed to create Smart Contracts in the Internet Computer.
-It has a lot of similarities with other programming languages.
+<img src="./files/motoko-logo.png" alt="logo" style="height: 100">
 
-[**Motoko Style Guide**](https://internetcomputer.org/docs/current/motoko/main/reference/style#style) || [**Debug**](https://internetcomputer.org/docs/current/motoko/main/base/Debug/)
 
-    dfx canister call canister_id function_name function_arg1 ...
+## Tokens
 
-### [Candid](https://internetcomputer.org/docs/current/tutorials/developer-journey/level-2/2.4-intro-candid/)
+To get our principal id
+```sh
+dfx identity get-principal
+```
+To call a method, do
+```sh
+dfx canister call <canister_id> <method> <arguments>
+```
 
-**Candid** is an interface description language. It provides an easy way for us to interact with the canisters.
+For automatic reload on the frontend, run
+```sh
+npm start
+```
+To charge a cansiter, do
+```sh
+# Get canister id
+dfx canister id <canister_name> # May not work
+# Save it to a command line variable
+CANISTER_PUBLIC_KEY="principal \"$( \dfx canister id token )\""
 
-    dfx canister id __Candid_UI
+echo $CANISTER_PUBLIC_KEY
 
-    http://127.0.0.1:4943/?canisterId=<candid_id>&id=<canister_id>
-
-`dfx deploy` wipes the values in the variables stored and resets them to their initial position. (Orthogonal Persistence)
-
+# Transfer
+dfx canister call token transfer "($CANISTER_PUBLIC_KEY, 500_000_000)"
+```
+```sh
+```

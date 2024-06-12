@@ -421,3 +421,16 @@ A library of pre-built React components based on the Google, Material design.
 ```jsx
 npm install @mui/material @emotion/react @emotion/styled
 ```
+
+### useEffect
+
+`useEffect()` hook is triggered every time the `render` method is called.
+We use this to trigger something whenever the components are re-rendered.
+
+This hook takes 2 arguments: A function to execute on re-rendering, and a condition to check before re-rendering.
+
+```jsx
+useEffect(() => {
+  fetchData();
+}, []); // Empty array is used to avoid re-rendering infinitely
+```
