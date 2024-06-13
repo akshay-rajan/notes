@@ -123,7 +123,7 @@ It can be integrated with dApps, and helps secure the user identity.
 
 | Term | Meaning |
 |---|---|
-Actor|A process with an encapsulated state, which communicates with other running actors, through asynchronous messages. |
+Actor|A process with an encapsulated state, which communicates with other running actors, through asynchronous messages. Motoko uses actor-based programming model.|
 Agent|Library used to make calls to the IC public interface. e.g. JavaScript, Rust|
 Canister | A type of smart contract used in IC. Types: Backend canister, frontend canister, Custom canister.
 Cycles|Unit of measurement used for resource consumption by a canister.|
