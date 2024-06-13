@@ -110,10 +110,14 @@ Canisters are computational units that bundle together both code and state.
 It can define functions that can be called by external services like apps or browsers, or by other canisters.
 A canister is managed by **Controllers**.
 A controller can be a centralized entity, a decentralized entity like DAO, or no controller at all, which would make it an immutable smart contract. Only controllers can deploy, update code and start or stop the execution of a cansiter. 
-They also ensure that the canister contains sufficient *cycles* to pay for the resources it consumes, which include network bandwidth, memory and computational power.
+They also ensure that the canister contains sufficient **cycles** to pay for the resources it consumes, which include network bandwidth (at times of usage, like message transfer), memory (at regular intervals) and computational power (at the time of computation).
+Controllers can update the canister code, replacing the current Wasm module with new one.
+By default, when updation happens, the canister clears out the Canister's memory.
+But the content of the `stable` memory remains.
 
 ***ICP*** is the Internet Computer's utility token.
-It has several functions, such as being staked to have voting power in the NNS (Network Nervous System: The DAO governing IC), or being used to purchase **cycles**, which power the canisters deployed on the mainnet.
+It has several functions, such as being staked to have voting power in the NNS (Network Nervous System: The DAO governing IC), or being used to purchase **cycles**, which power the canisters deployed on the mainnet. 
+Each canister has a local cycles account used to store it's cycles.
 
 ***Internet Identity (II)*** is a secure and advanced form of cryptographich authentication by the Internet Computer. 
 It can be integrated with dApps, and helps secure the user identity.
@@ -125,7 +129,7 @@ It can be integrated with dApps, and helps secure the user identity.
 |---|---|
 Actor|A process with an encapsulated state, which communicates with other running actors, through asynchronous messages. Motoko uses actor-based programming model.|
 Agent|Library used to make calls to the IC public interface. e.g. JavaScript, Rust|
-Canister | A type of smart contract used in IC. Types: Backend canister, frontend canister, Custom canister.
+Canister | A type of smart contract used in IC. Types: Backend canister, Frontend / asset canister, Custom canister.
 Cycles|Unit of measurement used for resource consumption by a canister.|
 dfx | Primary tool used for creating, managing and deploying canisters.
 Identity | A principal value used for access control of canisters.
@@ -214,8 +218,6 @@ dfx deploy
 Now the project is deployed to the local network.
 
 # MOTOKO
-
-<img src="./files/motoko-logo.png" alt="logo" style="height: 100">
 
 
 ## Tokens
