@@ -284,15 +284,26 @@ hello_world/
 
 Start the local, single-node IC network:
 ```sh
-dfx start
+dfx start --clean
 ```
+The *clean* option removes any orphan background processes or canister IDs that might cause conflicts.
+The *background* option can be used to start the network in the background.
 Deploy the created canisters into the local network:
 ```sh
 dfx deploy
 ```
 Now the project is deployed to the local network, and canisters are available at the link displayed in the terminal.
 We can access the Frontend canister using the link, if a frontend canister is deployed. 
-The link to Candid interface can be utilized to interact with the backend.
+The URL to Candid interface can be utilized to interact with the backend.
+
+**Motoko Playground** is a development environment that hosts a canister pool to which canisters can be deployed to.
+Canisters deployed to the playground can borrow a small amount of cycles and can run for 20 minutes.
+After 20 minutes the canister will be uninstalled, and the borrowed resources are returned to the canister pool.
+```
+dfx deploy [canister_name] --playground
+```
+This will deploy the canister with the corresponding name to Motoko playground. 
+To interact with it directly, use the URL to the Candid Interface displayed in the terminal.
 
 # MOTOKO
 
