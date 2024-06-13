@@ -102,6 +102,21 @@ The 4 layers are:
     </tr>
 </table>
 
+Another core component of ICP is an array of advanced cryptographic mechanisms refered to as **Chain-key cryptography**. 
+It uses a threshold signature scheme, in which the secret signing key is distributed among all the replicas in a subnet.
+Chain-key signatures allow integration with other blockchains such as Bitcoin and Ethereum.
+
+Canisters are computational units that bundle together both code and state.
+It can define functions that can be called by external services like apps or browsers, or by other canisters.
+A canister is managed by **Controllers**.
+A controller can be a centralized entity, a decentralized entity like DAO, or no controller at all, which would make it an immutable smart contract. Only controllers can deploy, update code and start or stop the execution of a cansiter. 
+They also ensure that the canister contains sufficient *cycles* to pay for the resources it consumes, which include network bandwidth, memory and computational power.
+
+***ICP*** is the Internet Computer's utility token.
+It has several functions, such as being staked to have voting power in the NNS (Network Nervous System: The DAO governing IC), or being used to purchase **cycles**, which power the canisters deployed on the mainnet.
+
+***Internet Identity (II)*** is a secure and advanced form of cryptographich authentication by the Internet Computer. 
+It can be integrated with dApps, and helps secure the user identity.
 
 ## [Installation and Setup](./Installation+and+Setup+for+Windows.pdf)
 
