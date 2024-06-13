@@ -195,35 +195,116 @@ Transaction|Transfer of ICP from one account to another. Types: Transfer, Mintin
     sh -ci "$(curl -fsSL https://internetcomputer.org/install.sh)"
     ```
 
-## Hello 
+## [dfx](https://internetcomputer.org/docs/current/developer-docs/developer-tools/cli-tools/cli-reference/)
 
-To create the default 'hello' app, run and select the appropriate stack. e.g. Motoko and React.
-
-```sh
-dfx new hello
+dfx is a command line utility used to interact with the IC SDK (Software Development Kit).
 ```
-To see the created project in file explorer, run `explorer.exe
-.` 
-You can open the project in VS Code.
-
-```sh
-cd hello
+dfx [subcommand] [flag]
+        ↑           ↑
+    * new          -h --help
+    * start        -q --quiet
+    * stop         -v --verbose
+    * build        -V --version
+    * canister  
+    * cycles    
+    * deploy    
+    * identity  
+    * upgrade
+    * ledger
+    * help      
+    * info
+    * ping
+    * quickstart
 ```
+
+Use `dfx new [project_name]` to create a new project:
+
+```
+dfx new hello_world
+```
+
+You will be prompted to select the language that your backend canister will use:
+
+```
+? Select a backend language: ›
+❯ Motoko
+Rust
+TypeScript (Azle)
+Python (Kybra)
+```
+
+Then, select a frontend framework for your frontend canister.
+
+```
+? Select a frontend framework: ›
+SvelteKit
+❯ React
+Vue
+Vanilla JS
+No JS template
+No frontend canister
+```
+
+Lastly, you can include extra features to be added to your project:
+
+```
+? Add extra features (space to select, enter to confirm) ›
+⬚ Internet Identity
+⬚ Bitcoin (Regtest)
+⬚ Frontend tests
+```
+
+To see the created project in file explorer, run `explorer.exe .` 
+You can open the project in VS Code (`code .`).
+Now, navigate into the project directory:
+```sh
+cd hello_world
+```
+The project structure will be like this:
+```sh
+hello_world/
+├── README.md      # Default project documentation
+├── dfx.json       # Project configuration file
+├── node_modules   # Libraries for frontend development
+├── package-lock.json
+├── package.json
+├── src            # Source files directory
+│   ├── hello_world_backend
+│   │   └── main.mo  
+│   ├── hello_world_frontend
+│       ├── assets
+│       │   ├── logo.png
+│       │   ├── main.css
+│       │   └── sample-asset.txt
+│       └── src
+│           ├── index.html
+│           └── index.js
+└── webpack.config.js
+```
+
+Start the local, single-node IC network:
 ```sh
 dfx start
 ```
+Deploy the created canisters into the local network:
 ```sh
 dfx deploy
 ```
-Now the project is deployed to the local network.
+Now the project is deployed to the local network, and canisters are available at the link displayed in the terminal.
+We can access the Frontend canister using the link, if a frontend canister is deployed. 
+The link to Candid interface can be utilized to interact with the backend.
 
 # MOTOKO
 
 <table><tr><td>
 Motoko is the language specifically designed by DFINITY for canister development on ICP. <br/>
-It has Candid support (Candid is a language which allows communication between canisters in different languages), Stable Memory support (memory persistence), Actor paradigm and asynchronous data and control flow.
+It has Candid support, Stable Memory support (memory persistence), uses Actor paradigm facilitates asynchronous data and control flow.
         </td><td><img src="./files/motoko-logo.png" alt="logo" style="height: 200">
 </td></tr></table>
+
+Candid is an language which allows communication between canisters in different languages. 
+It is an Interface Description Language (IDL) with the primary purpose to describe the public interface of a service (program).
+They allow us to interact with the service directly from the CLI, through a web based frontend, or programmatically.
 
 ## Tokens
 
