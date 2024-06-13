@@ -197,14 +197,14 @@ Transaction|Transfer of ICP from one account to another. Types: Transfer, Mintin
 
 ## Hello 
 
-To create the default 'hello' app, run
+To create the default 'hello' app, run and select the appropriate stack. e.g. Motoko and React.
 
 ```sh
 dfx new hello
 ```
-
 To see the created project in file explorer, run `explorer.exe
-.` Now open the project in VS Code.
+.` 
+You can open the project in VS Code.
 
 ```sh
 cd hello
@@ -219,6 +219,11 @@ Now the project is deployed to the local network.
 
 # MOTOKO
 
+<table><tr><td>
+Motoko is the language specifically designed by DFINITY for canister development on ICP. <br/>
+It has Candid support (Candid is a language which allows communication between canisters in different languages), Stable Memory support (memory persistence), Actor paradigm and asynchronous data and control flow.
+        </td><td><img src="./files/motoko-logo.png" alt="logo" style="height: 200">
+</td></tr></table>
 
 ## Tokens
 
