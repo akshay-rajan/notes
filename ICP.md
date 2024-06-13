@@ -118,6 +118,24 @@ It has several functions, such as being staked to have voting power in the NNS (
 ***Internet Identity (II)*** is a secure and advanced form of cryptographich authentication by the Internet Computer. 
 It can be integrated with dApps, and helps secure the user identity.
 
+
+## Terminology
+
+| Term | Meaning |
+|---|---|
+Actor|A process with an encapsulated state, which communicates with other running actors, through asynchronous messages. |
+Agent|Library used to make calls to the IC public interface. e.g. JavaScript, Rust|
+Canister | A type of smart contract used in IC. Types: Backend canister, frontend canister, Custom canister.
+Cycles|Unit of measurement used for resource consumption by a canister.|
+dfx | Primary tool used for creating, managing and deploying canisters.
+Identity | A principal value used for access control of canisters.
+Principal|An entity that can be authenticated by ICP.|
+Messages|Data sent from one canister to another, or from a user to a canister.|
+Replica|Collection of protocol components necessary for a node to participate in a subnet.|
+Smart contracts|Stateful programs that are designed to automatically execute, control, or document events and actions according to the configuration of the contract
+Subnet|Collection of nodes that operate an independent instance of the blockchain network by running their own implementation of the consensus algorithm. They interact with other subnets through chain-key cryptography.|
+Transaction|Transfer of ICP from one account to another. Types: Transfer, Minting, Burning|
+
 ## [Installation and Setup](./Installation+and+Setup+for+Windows.pdf)
 
 1. Install Windows Subsystem for Linux (WSL)
