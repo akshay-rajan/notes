@@ -136,7 +136,7 @@ Smart contracts|Stateful programs that are designed to automatically execute, co
 Subnet|Collection of nodes that operate an independent instance of the blockchain network by running their own implementation of the consensus algorithm. They interact with other subnets through chain-key cryptography.|
 Transaction|Transfer of ICP from one account to another. Types: Transfer, Minting, Burning|
 
-## [Installation and Setup](./Installation+and+Setup+for+Windows.pdf)
+## [Installation and Setup](./files/Installation+and+Setup+for+Windows.pdf)
 
 1. Install Windows Subsystem for Linux (WSL)
 
