@@ -122,6 +122,9 @@ Each canister has a local cycles account used to store it's cycles.
 ***Internet Identity (II)*** is a secure and advanced form of cryptographich authentication by the Internet Computer. 
 It can be integrated with dApps, and helps secure the user identity.
 
+**Candid** is a language which allows communication between canisters in different languages. 
+It is an Interface Description Language (IDL) with the primary purpose to describe the public interface of a service (program).
+They allow us to interact with the service directly from the CLI, through a web based frontend, or programmatically.
 
 ## Terminology
 
@@ -302,7 +305,7 @@ After 20 minutes the canister will be uninstalled, and the borrowed resources ar
 ```
 dfx deploy [canister_name] --playground
 ```
-This will deploy the canister with the corresponding name to Motoko playground. 
+This will deploy a single canister to Motoko playground. 
 To interact with it directly, use the URL to the Candid Interface displayed in the terminal.
 
 # MOTOKO
@@ -313,9 +316,105 @@ It has Candid support, Stable Memory support (memory persistence), uses Actor pa
         </td><td><img src="./files/motoko-logo.png" alt="logo" style="height: 200">
 </td></tr></table>
 
-Candid is an language which allows communication between canisters in different languages. 
-It is an Interface Description Language (IDL) with the primary purpose to describe the public interface of a service (program).
-They allow us to interact with the service directly from the CLI, through a web based frontend, or programmatically.
+```ts
+    // Declarations
+let x = 1; 
+let y = x + 1; 
+x * y + x; // Expression (stored in an unknown variable)
+
+// Block using 'do {};'
+let z = do {    // z stores the output
+  let x = 1;
+  let y = x + 1;
+  x * y + x
+};
+```
+Declarations introduce immutable variables, whereas, expressions define computations involving them.
+
+Using the `import` keyword, we can import the *Motoko Base Library*.
+After the keyword, a local module name and file path of the module should be provided.
+Also, we can import other Motoko programs.
+
+```ts
+import Debug "mo:base/Debug"; // Import Debug.mo from base lib
+import Types "./types"; // Import a Motoko program named types.mo
+
+Debug.print("hello world"); // Prints a string
+```
+
+Type `Nat` refers to Natural Numbers. Nat is unbounded.
+```ts
+let x = 42 + (1 * 37) / 12: Nat
+```
+An `actor` is a process with encapsulated state that communicates with other running actors. To define an actor:
+```ts
+actor {
+    //actor code goes here
+}
+```
+Primitive values available in Motoko are
+
+* Boolean: `true`, `false`
+* Integers: ...-1, 0, 1,... (bounded and unbounded)
+* Natural Numbers: 0, 1,... (bounded and unbounded)
+* Text values: Strings of Unicode characters
+
+Non-primitive values include
+
+* Tuples
+* Arrays
+* Objects
+* Variants
+* Function values
+* Async values
+* Error values
+
+To convert a value to human-readable text, use `debug_show`:
+```ts
+Debug.print(debug_show(("hello", 42, "world")))
+// Output: ("hello", 42, "world")
+```
+A **function** that takes a `Text` as an argument, and returns an output of type `Text`:
+
+```ts
+actor {
+    public func location(city : Text) : async Text {
+        return "Hello, " # city # "!";
+    };
+};
+```
+We can call the above function:
+```ts
+> dfx canister call location_hello_backend location "San Francisco"
+// Output: ("Hello, San Francisco!")
+```
+All functions that returns values must be declared as `async`.
+
+### Query calls v Update calls
+
+A `Query call` is a function that does not alter any data. 
+It is executed on a single node of a subnet. 
+It has low resource consumption and lightning fast response.
+
+An `Update call` is executed on all nodes of a subnet. The result must pass through consensus on the subnet, and update calls has the ability to alter data. 
+Update calls are slow and expensive.
+
+```ts
+```
+```ts
+```
+```ts
+```
+```ts
+```
+```ts
+```
+```ts
+```
+```ts
+```
+```ts
+```
 
 ## Tokens
 
