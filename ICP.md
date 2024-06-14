@@ -386,6 +386,50 @@ Now our project is hosted 100% on-chain and is accessible through the URL
 https://<canister_id>.icp0.io
 ```
 
+To add our identity as a controller, run:
+```
+dfx canister update-settings poll_backend --add-controller PRINCIPAL_ID
+```
+To view the controllers of a canister, use the `info` option.
+```
+dfx canister info canisterName
+```
+To check the current status of all canisters, run
+```
+dfx canister status --network ic --all
+```
+We can stop a cansiter through
+```
+dfx canister stop --network ic --all
+```
+And start them again
+```
+dfx canister start --network ic --all
+```
+We can control the maximum amount of reserved cycles in a canister by running:
+```
+dfx canister update-settings <canister-id> --reserved-cycles-limit 42 --ic
+```
+To `top-up` a specific canister using ICP, do
+```
+dfx ledger top-up <canister-id> --amount 2.7 --network ic
+```
+To use cycles ledger to top-up, run
+```
+dfx cycles top-up `AMOUNT` `CANISTER_ID` --network ic
+```
+If we stop and then delete a canister, it's balance comes back to the identity associated with the controller principal.
+```
+dfx canister delete `CANISTER_ID` --network ic
+```
+Freezing threshold is a value in seconds, which defines how many cycles the canister must retain in its cycles balance.
+If the balance goes below the threshold, the canister will be frozen.
+Default freezing threshold is 2_592_000s: 30 days.
+This feature is to avoid running out of cycles, which causes the canister to uninstall.
+We can update it by running
+```
+dfx canister update-settings poll_backend --freezing-threshold 3472000
+```
 
 # MOTOKO
 
