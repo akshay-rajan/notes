@@ -266,23 +266,28 @@ cd hello_world
 The project structure will be like this:
 ```sh
 hello_world/
-├── README.md      # Default project documentation
-├── dfx.json       # Project configuration file
-├── node_modules   # Libraries for frontend development
+├── README.md       # Default project documentation
+├── dfx.json        # Project configuration file
+├── node_modules    # Libraries for frontend development
 ├── package-lock.json
 ├── package.json
-├── src            # Source files directory
-│   ├── hello_world_backend
-│   │   └── main.mo  
-│   ├── hello_world_frontend
-│       ├── assets
-│       │   ├── logo.png
-│       │   ├── main.css
-│       │   └── sample-asset.txt
-│       └── src
-│           ├── index.html
-│           └── index.js
-└── webpack.config.js
+├── src             # Source files directory
+│   ├── hello_world_backend
+│   │   └── main.mo
+│   └── hello_world_frontend
+│       ├── index.html
+│       ├── package.json
+│       ├── public
+│       │   ├── favicon.ico
+│       │   └── logo2.svg
+│       ├── src
+│       │   ├── App.jsx
+│       │   ├── index.scss
+│       │   ├── main.jsx
+│       │   └── vite-env.d.ts
+│       ├── tsconfig.json
+│       └── vite.config.js
+└── tsconfig.json
 ```
 
 Start the local, single-node IC network:
@@ -308,16 +313,90 @@ dfx deploy [canister_name] --playground
 This will deploy a single canister to Motoko playground. 
 To interact with it directly, use the URL to the Candid Interface displayed in the terminal.
 
+We can deploy our project to the mainnet using the command:
+```
+dfx deploy --network ic
+```
+but, this requires cycles.
+
+## Cycles
+
+Distribution of cycles are managed by a system canister called *cycles ledger*.
+It provides functionality for converting ICP to cycles, accept incoming cycles, send cycles to other canisters and create canisters with cycles.
+A developer's cycles balance is associated with their *principal identity*. 
+Each canister uses cycles from their own cycles balance and not from the user's identity.
+If there is not sufficient balance to call a method, or while creating a new canister, we have to proxy the call through the cycles ledger. 
+We can top up a canister: deposit cycles into it's cycles balance.
+
+In deployment to the mainnet, canisters will need to have cycles explicitly registered and transfered to them. 
+We also have to configure *custodians*, which are principals that have explicit permission to send and recieve cycles for the canister.
+
+The default developer identity is a public/private key pair created when we first use dfx. 
+But the account identifier is derived from the public key. 
+Account identifier is the one specified in the ICP ledger. 
+Each principal can control multiple accounts.
+
+Create a new developer identity using
+```
+dfx identity new DevJourney
+```
+Store the seed phrase returned for recovering the identity if lost.
+Set this identity as the one to be used by dfx:
+```
+dfx identity use DevJourney
+```
+Get the principal id of this identity:
+```
+dfx identity get-principal
+```
+Obtain coupon for [free 10T cycles](https://anv4y-qiaaa-aaaal-qaqxq-cai.ic0.app/) and set the following environment variable to use cycles ledger and redeem the coupon:
+```
+DFX_CYCLES_LEDGER_SUPPORT_ENABLE=1
+dfx cycles --network ic redeem-faucet-coupon COUPON_CODE
+```
+Check the balance:
+```
+dfx cycles --network ic balance
+```
+If we have ICP tokens, we can convert them to cycles.
+```sh
+# Get the account id
+dfx ledger account-id
+# Send ICP to this account and verify the balance
+dfx ledger --network ic balance
+# Convert 'AMOUNT' ICPs to Cycles
+dfx cycles convert AMOUNT --network ic
+# Check the cycles balance
+```
+Before deployment to the IC network, check connectivity:
+```
+dfx ping ic
+```
+Now deploy using `dfx deploy --ic` (shortcut). This will automatically deploy all canisters in the `dfx.json` file. 
+To deploy only one canister run
+```
+dfx deploy canister_name --network ic
+```
+To access the dapp frontend, obtain the canister id:
+```
+dfx canister id projectName_frontend --network ic
+```
+Now our project is hosted 100% on-chain and is accessible through the URL 
+```
+https://<canister_id>.icp0.io
+```
+
+
 # MOTOKO
 
 <table><tr><td>
 Motoko is the language specifically designed by DFINITY for canister development on ICP. <br/>
-It has Candid support, Stable Memory support (memory persistence), uses Actor paradigm facilitates asynchronous data and control flow.
+It has Candid support, Stable Memory support (memory persistence), uses Actor paradigm facilitates asynchronous data and control flow, and many more features.
         </td><td><img src="./files/motoko-logo.png" alt="logo" style="height: 200">
 </td></tr></table>
 
 ```ts
-    // Declarations
+// Declarations
 let x = 1; 
 let y = x + 1; 
 x * y + x; // Expression (stored in an unknown variable)
@@ -327,7 +406,7 @@ let z = do {    // z stores the output
   let x = 1;
   let y = x + 1;
   x * y + x
-};
+}; // Blocks end with a ';'
 ```
 Declarations introduce immutable variables, whereas, expressions define computations involving them.
 
@@ -399,15 +478,42 @@ It has low resource consumption and lightning fast response.
 An `Update call` is executed on all nodes of a subnet. The result must pass through consensus on the subnet, and update calls has the ability to alter data. 
 Update calls are slow and expensive.
 
+### Data Structures
+
+For storing key-value pairs, we can use a `HashMap` or `RBTree`.
 ```ts
+// Initializing an RB Tree
+var votes: RBTree.RBTree<Text, Nat> = RBTree.RBTree(Text.compare);
 ```
+The function below returns an array of entries in an RB tree:
 ```ts
+public query func getVotes() : async [(Text, Nat)] {
+    Iter.toArray(votes.entries())
+};
+// Eg.[["Motoko","0"],["Python","0"],["Rust","0"]]
 ```
+We can get an element from the hashmap using the `get()` method and insert using `put()`.
+Note that *get()* returns an element of type `?Nat`, which means, it either returns a value of type `Nat` or `null`, if the value key is absent.
 ```ts
+let votes_for_entry :?Nat = votes.get(entry);
+// Converting to Nat
+let current_votes_for_entry : Nat = switch votes_for_entry {
+    case null 0;
+    case (?Nat) Nat;
+};
+votes.put(entry, current_votes_for_entry + 1);
 ```
-```ts
+
+## JavaScript
+
+For implementing the frontend, we have establish communciation with the backend canister.
+We can import an interface for the backed in the JavaScript file like:
+```jsx
+import { projectName_backend } from "../../declarations/projectName_backend";
 ```
-```ts
+The methods in the backend can be called asyncronously from the frontend like:
+```jsx
+const voteCounts = await poll_backend.getVotes();
 ```
 ```ts
 ```
