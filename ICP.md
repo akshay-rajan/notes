@@ -611,6 +611,51 @@ The `shared` keyword is used to share functions across actors.
 ```ts
 type SubscribeMessage = { callback: shared () -> (); };
 ```
+
+**Third Party Canisters** are canisters that provide a public service at a static canister ID.
+Some examples are the Dfinity NNS and Internet Identity.
+They can be used to add additional functionality to the dapps.
+dfx enables a *dependency* workflow, where a canister is able to pull a third party canister that it depends on into the local environment.
+
+To add the Internet Identity canister with id `rdmx6-jaaaa-aaaaa-aaadq-cai` as a dependency, we need to edit the `dfx.json` file:
+```json
+...
+"canisters": {
+    ...
+    "internet_identity": {
+        "type": "pull",
+        "id": "rdmx6-jaaaa-aaaaa-aaadq-cai"
+    },
+},
+...
+```
+And run the following command to download the Wasm module of the  dependency canister:
+```sh
+dfx deps pull
+```
+Now set the `init` arguments for the dependencies:
+```sh
+dfx deps init
+dfx deps init <canister_id> # In case of errors
+dfx deps init <canister_id> <arguments>
+```
+Now deploy the pulled dependency canister:
+```
+dfx deps deploy
+```
+and then, deploy our project with `dfx deploy`. 
+Now the dependency canister is deployed locally, and we can interact with it using the Candid URL displayed.
+
+The candid serivce description files are those that have the extension `.did`. 
+These contain descriptions on methods defined in the backend code `main.mo`. 
+When the code is compiled, the Candid description is automatically generated. 
+While calling a function using 
+```sh
+dfx canister call <canister_id> <method> <arguments>
+```
+we are actually interacting with the Candid description inside the `/declarations` folder.
+The URL of the Candid Interface that shows up while deploying takes us to the Candid UI, which lets us call methods from the graphical interface.
+
 ```ts
 ```
 ```ts
@@ -618,14 +663,6 @@ type SubscribeMessage = { callback: shared () -> (); };
 
 ## Tokens
 
-To get our principal id
-```sh
-dfx identity get-principal
-```
-To call a method, do
-```sh
-dfx canister call <canister_id> <method> <arguments>
-```
 
 For automatic reload on the frontend, run
 ```sh
