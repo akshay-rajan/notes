@@ -671,6 +671,9 @@ dfx canister call <canister_id> <method> <arguments>
 we are actually interacting with the Candid description inside the `/declarations` folder.
 The URL of the Candid Interface that shows up while deploying takes us to the Candid UI, which lets us call methods from the graphical interface.
 
+In IC, canisters can communicate directly with external servers or other blockchains through **HTTPS Outcalls**.
+It supports GET, HEAD and POST methods.
+
 ## Testing
 
 We can perform unit testing, integration testing as well as End2end (e2e) testing in the production environment.
