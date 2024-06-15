@@ -475,6 +475,12 @@ actor {
     //actor code goes here
 }
 ```
+Actors can have names:
+```ts
+actor Counter {
+    // ...
+}
+```
 Primitive values available in Motoko are
 
 * Boolean: `true`, `false`
@@ -555,6 +561,7 @@ let current_votes_for_entry : Nat = switch votes_for_entry {
 };
 votes.put(entry, current_votes_for_entry + 1);
 ```
+---
 
 **Stable Variables** can be declared like:
 
@@ -564,6 +571,12 @@ actor Counter {
   ...
 }
 ```
+
+A **Local Function** will block the entity making a call to the function until the function has returned a result.
+A **Shared Function** immediately returns a value known as the **future**.
+It means that, an asynchronous value is expected to be returned.
+
+We can implement a project with multiple actors, in separate `main.mo` files.
 
 ## JavaScript
 
@@ -576,6 +589,8 @@ The methods in the backend can be called asyncronously from the frontend like:
 ```jsx
 const voteCounts = await poll_backend.getVotes();
 ```
+
+
 
 
 ## Canisters
@@ -619,15 +634,15 @@ dfx enables a *dependency* workflow, where a canister is able to pull a third pa
 
 To add the Internet Identity canister with id `rdmx6-jaaaa-aaaaa-aaadq-cai` as a dependency, we need to edit the `dfx.json` file:
 ```json
-...
+// ...
 "canisters": {
-    ...
+    // ...
     "internet_identity": {
         "type": "pull",
         "id": "rdmx6-jaaaa-aaaaa-aaadq-cai"
     },
 },
-...
+// ...
 ```
 And run the following command to download the Wasm module of the  dependency canister:
 ```sh
@@ -656,7 +671,22 @@ dfx canister call <canister_id> <method> <arguments>
 we are actually interacting with the Candid description inside the `/declarations` folder.
 The URL of the Candid Interface that shows up while deploying takes us to the Candid UI, which lets us call methods from the graphical interface.
 
+## Testing
+
+We can perform unit testing, integration testing as well as End2end (e2e) testing in the production environment.
+A sample unit test is given below:
 ```ts
+import M "mo:matchers/Matchers";
+import T "mo:matchers/Testable";
+import Suite "mo:matchers/Suite";
+
+let suite = Suite.suite("My test suite", [
+    Suite.suite("Nat tests", [
+        Suite.test("10 is 10", 10, M.equals(T.nat(10))),
+        Suite.test("5 is greater than three", 5, M.greaterThan<Nat>(3)),
+    ])
+]);
+Suite.run(suite);
 ```
 ```ts
 ```
