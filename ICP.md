@@ -492,6 +492,14 @@ Non-primitive values include
 * Async values
 * Error values
 
+We can declare a new type like:
+```ts
+type Counter = {
+    topic : Text;
+    value : Nat;
+};
+```
+
 To convert a value to human-readable text, use `debug_show`:
 ```ts
 Debug.print(debug_show(("hello", 42, "world")))
@@ -548,6 +556,15 @@ let current_votes_for_entry : Nat = switch votes_for_entry {
 votes.put(entry, current_votes_for_entry + 1);
 ```
 
+**Stable Variables** can be declared like:
+
+```ts
+actor Counter {
+  stable var value = 0;
+  ...
+}
+```
+
 ## JavaScript
 
 For implementing the frontend, we have establish communciation with the backend canister.
@@ -559,7 +576,40 @@ The methods in the backend can be called asyncronously from the frontend like:
 ```jsx
 const voteCounts = await poll_backend.getVotes();
 ```
+
+
+## Canisters
+
+**Stable Memory** is the unique feature of IC data store separate from the canister's regular Wasm memory store, known as **Heap Memory**.
+Stable memory enables long-term data storage.
+
+Heap memory does not persist across upgrades, and is cleared when the canister is upgraded or reinstalled.
+Heap memory size is limited to 4GB.
+Stable memory persists across upgrades, has a much larger capacity, and is very beneficial for vertical scaling.
+We need to indicate which canister data we want to be retained after upgrades.
+Stable memory can hold upto 400GB.
+
+Upgrading is the process of making changes to a canister's code, which was already deployed.
+
+A stable variable is a variable defined within an actor using the `stable` keyword. 
+This indicates that data stored in the variable should be in stable storage.
+
+We can try stopping the canister and reinstalling to check if the value has been retained.
+
+```sh
+dfx canister stop counter_backend
+dfx canister install counter_backend --mode upgrade
+dfx canister start counter_backend
+```
+
+*Certified Variables* can be used to enable queries to return an authenticated response that can be verified and trusted.
+Normal query calls do not go through consensus and thus cannot be trusted.
+Certified variables are generated using Chain-key cryptography and are thus, accurate and secure.
+
+Inter-canister calls refer to the ability to make calls between different canisters. 
+The `shared` keyword is used to share functions across actors.
 ```ts
+type SubscribeMessage = { callback: shared () -> (); };
 ```
 ```ts
 ```
