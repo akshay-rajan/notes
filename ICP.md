@@ -578,6 +578,20 @@ It means that, an asynchronous value is expected to be returned.
 
 We can implement a project with multiple actors, in separate `main.mo` files.
 
+We can identify the caller of a function by their principal id if the function is declared as `shared`:
+```ts
+shared(msg) func inc() : async () {
+  let owner = msg.caller;
+}
+```
+
+Pattern Matching is a feature for decomposing structured data into individual components:
+```ts
+let name : Text = fullName({ first = "Jane"; mid = "M"; last = "Doe" });
+```
+```ts
+```
+
 ## JavaScript
 
 For implementing the frontend, we have establish communciation with the backend canister.
