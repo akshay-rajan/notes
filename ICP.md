@@ -42,6 +42,18 @@ In this, we can build the technology, release tokens to public or to funds and r
 Ethereum is the most commonly used blockchain for dApps, but it has certain demerits like very high expense (gas price) on computation. 
 The **Internet Computer** is a scalable cloud computer that runs on a blockchain. It can perform fast computations and store data directly on the chain.
 
+<table>
+    <tr><td><a href="#internet-computer">Internet Computer</a></td></tr>
+    <tr><td><a href="#installation-and-setup">Installation and Setup</a></td></tr>
+    <tr><td><a href="#dfx">dfx</a></td></tr>
+    <tr><td><a href="#motoko">MOTOKO</a></td></tr>
+    <tr><td><a href="#javascript">JavaScript</a></td></tr>
+    <tr><td><a href="#canisters">Canisters</a></td></tr>
+    <tr><td><a href="#identity">Identity</a></td></tr>
+    <tr><td><a href="#ledger">Ledger</a></td></tr>
+    <tr><td><a href="#tokens">Tokens</a></td></tr>
+</table>
+
 # Internet Computer 
 
 ![alt text](./files/ic.png)
