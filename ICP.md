@@ -691,8 +691,58 @@ let suite = Suite.suite("My test suite", [
 ]);
 Suite.run(suite);
 ```
+
+## Identity
+
+- Developer Identity: Created using dfx. It contains a public/private key pair, and has `principal` datatype.
+- Principals: Generic identifiers for users and canisters.
+- Principal Identifier: Principals associated with a user Principal ID.
+- Account Identifier: Identifier associated with the ICP ledger account.
+- Internet Identity: ICP's native authentication service.
+
+[**Internet Identity**](https://identity.ic0.app/) allows users to register and authenticate without username or password.
+Instead, a **passkey** is used, which is a unique public/private key pair stored in the secure hardware chip of our device.
+This allows authentication via fingerprint, face unlock or another method.
+
+To use II, we need to import `auth-client` package
 ```ts
+import { AuthClient } from "@dfinity/auth-client";
 ```
+If we are using local deployment, we have to deploy the II canister locally, and for IC network, the mainnet II canister is used.
+This can be configured like:
+```ts
+export const defaultOptions = {
+  createOptions: {
+    idleOptions: {
+      // Set to true if you do not want idle functionality
+      disableIdle: true,
+    },
+  },
+  loginOptions: {
+    identityProvider:
+      process.env.DFX_NETWORK === "ic"
+        ? "https://identity.ic0.app/#authorize"
+        : `http://localhost:4943?canisterId=rdmx6-jaaaa-aaaaa-aaadq-cai#authorize`,
+    // Maximum authorization expiration is 8 days
+    maxTimeToLive: days * hours * nanoseconds,
+  },
+};
+```
+Now, we need to include the authentication code in our JavaScript file:
+```jsx
+const init = async () => {
+  const authClient = await AuthClient.create(defaultOptions.createOptions);
+
+  if (await authClient.isAuthenticated()) {
+    handleAuthenticated(authClient);
+  }
+  renderIndex(); // Render the page
+//   setupToast();
+};
+
+init();
+```
+The II canister can be pulled using `dfx deps`.
 
 ## Tokens
 
