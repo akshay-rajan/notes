@@ -758,6 +758,16 @@ init();
 ```
 The II canister can be pulled using `dfx deps`.
 
+## Ledger
+
+There are 3 types of transactions in ICP ledger:
+    
+1. Minting: Generate new token for an account.
+2. Burning: Eliminate a token from existence.
+3. Transfering
+
+We can use the `dfx-nns` command to deploy the ICP ledger locally, which is heavy, or otherwise deploy with a [Wasm file](https://download.dfinity.systems/ic/<VERSION>/canisters/ledger-canister.wasm.gz), downloaded.
+
 ## Tokens
 
 
