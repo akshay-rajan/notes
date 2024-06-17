@@ -443,7 +443,7 @@ We can update it by running
 dfx canister update-settings poll_backend --freezing-threshold 3472000
 ```
 
-# MOTOKO
+## MOTOKO
 
 <table><tr><td>
 Motoko is the language specifically designed by DFINITY for canister development on ICP. <br/>
@@ -604,7 +604,15 @@ let name : Text = fullName({ first = "Jane"; mid = "M"; last = "Doe" });
 
 **Immutable** Values use the `let` syntax while declaring, whereas **Mutable** variables are declared using `var`.
 
+The `actor class` is used to create a canister programmatically.
 ```ts
+actor class NFT (name: Text, owner: Principal, content: [nat8]) {
+    // ...
+}
+```
+To deploy a canister with arguments, do:
+```sh
+dfx deploy --argument='(<arguments>)'
 ```
 
 ## JavaScript
