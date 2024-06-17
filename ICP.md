@@ -601,6 +601,9 @@ Pattern Matching is a feature for decomposing structured data into individual co
 ```ts
 let name : Text = fullName({ first = "Jane"; mid = "M"; last = "Doe" });
 ```
+
+**Immutable** Values use the `let` syntax while declaring, whereas **Mutable** variables are declared using `var`.
+
 ```ts
 ```
 
@@ -782,6 +785,8 @@ We can use the `dfx-nns` command to deploy the ICP ledger locally, which is heav
 
 ## Tokens
 
+For developers to create their own fungible (exchangeable) token, the **ICRC-1** (Internet Computer Request for Comments) token standard can be used.
+ICRC-1 is an alternative to ICP ledger.
 
 For automatic reload on the frontend, run
 ```sh
