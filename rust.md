@@ -438,3 +438,129 @@ let absent_number: Option<i32> = None;
   }
   ```
 
+## Working with Collections in Rust
+
+#### Overview
+Rust provides powerful and flexible collection types in its standard library. The most commonly used collections are vectors, strings, hash maps, and slices.
+
+#### Vectors
+- **Definition**: A growable array type, `Vec<T>`.
+- **Creating Vectors**:
+  ```rust
+  let v: Vec<i32> = Vec::new();
+  let v = vec![1, 2, 3];
+  ```
+- **Updating Vectors**:
+  ```rust
+  let mut v = Vec::new();
+  v.push(5);
+  v.push(6);
+  v.push(7);
+  ```
+- **Reading Elements**:
+  - Using Index:
+    ```rust
+    let third = &v[2];
+    ```
+  - Using `get` Method:
+    ```rust
+    match v.get(2) {
+        Some(third) => println!("The third element is {}", third),
+        None => println!("There is no third element."),
+    }
+    ```
+- **Iterating Over Vectors**:
+  ```rust
+  let v = vec![100, 32, 57];
+  for i in &v {
+      println!("{}", i);
+  }
+
+  let mut v = vec![100, 32, 57];
+  for i in &mut v {
+      *i += 50;
+  }
+  ```
+
+#### Strings
+- **Definition**: A collection of `char` values representing a sequence of UTF-8 encoded characters.
+- **Creating Strings**:
+  ```rust
+  let s = String::new();
+  let s = "initial contents".to_string();
+  let s = String::from("initial contents");
+  ```
+- **Updating Strings**:
+  ```rust
+  let mut s = String::from("foo");
+  s.push_str("bar");
+  s.push('!');
+  ```
+- **Concatenation**:
+  ```rust
+  let s1 = String::from("Hello, ");
+  let s2 = String::from("world!");
+  let s3 = s1 + &s2; // s1 is moved here and can no longer be used
+  ```
+- **String Slices**:
+  ```rust
+  let hello = "Здравствуйте";
+  let s = &hello[0..4]; // s will be "Зд"
+  ```
+
+#### Hash Maps
+- **Definition**: A collection of key-value pairs. Keys are unique.
+- **Creating Hash Maps**:
+  ```rust
+  use std::collections::HashMap;
+
+  let mut scores = HashMap::new();
+  scores.insert(String::from("Blue"), 10);
+  scores.insert(String::from("Yellow"), 50);
+  ```
+- **Accessing Values**:
+  ```rust
+  let team_name = String::from("Blue");
+  let score = scores.get(&team_name);
+  ```
+- **Iterating Over Hash Maps**:
+  ```rust
+  for (key, value) in &scores {
+      println!("{}: {}", key, value);
+  }
+  ```
+- **Updating Values**:
+  - Overwriting:
+    ```rust
+    scores.insert(String::from("Blue"), 25);
+    ```
+  - Only Inserting If the Key Has No Value:
+    ```rust
+    scores.entry(String::from("Yellow")).or_insert(50);
+    scores.entry(String::from("Blue")).or_insert(50);
+    ```
+  - Updating Based on the Old Value:
+    ```rust
+    let text = "hello world wonderful world";
+    let mut map = HashMap::new();
+
+    for word in text.split_whitespace() {
+        let count = map.entry(word).or_insert(0);
+        *count += 1;
+    }
+    ```
+
+#### Slices
+- **Definition**: References to a contiguous sequence of elements in a collection.
+- **String Slices**:
+  ```rust
+  let s = String::from("hello world");
+  let hello = &s[0..5];
+  let world = &s[6..11];
+  ```
+- **Array Slices**:
+  ```rust
+  let a = [1, 2, 3, 4, 5];
+  let slice = &a[1..3];
+  ```
+
