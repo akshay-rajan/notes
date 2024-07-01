@@ -201,3 +201,240 @@ fn main() {
     println!("r: {}", r);
 }
 ```
+## Compound Data Types in Rust
+
+#### Tuples
+- **Definition**: Tuples are fixed-size collections of values of different types.
+- **Syntax**:
+  ```rust
+  let tup: (i32, f64, u8) = (500, 6.4, 1);
+  ```
+- **Accessing Elements**:
+  - Destructuring:
+    ```rust
+    let (x, y, z) = tup;
+    println!("The value of y is: {}", y);
+    ```
+  - Using dot notation:
+    ```rust
+    let x = tup.0;
+    let y = tup.1;
+    let z = tup.2;
+    ```
+
+#### Structs
+- **Definition**: Structs are custom data types that group related values.
+- **Types of Structs**:
+  - **Classic C-like Struct**:
+    ```rust
+    struct User {
+        username: String,
+        email: String,
+        sign_in_count: u64,
+        active: bool,
+    }
+
+    let user1 = User {
+        username: String::from("someusername123"),
+        email: String::from("someone@example.com"),
+        sign_in_count: 1,
+        active: true,
+    };
+    ```
+  - **Tuple Structs**:
+    ```rust
+    struct Color(i32, i32, i32);
+
+    let black = Color(0, 0, 0);
+    ```
+  - **Unit-like Structs** (without fields, useful for traits):
+    ```rust
+    struct AlwaysEqual;
+    ```
+
+- **Accessing Struct Fields**:
+  ```rust
+  let user_email = user1.email;
+  ```
+
+- **Struct Update Syntax**:
+  ```rust
+  let user2 = User {
+      email: String::from("another@example.com"),
+      ..user1
+  };
+  ```
+
+#### Enums
+- **Definition**: Enums allow the definition of a type by enumerating its possible variants.
+- **Syntax**:
+  ```rust
+  enum Message {
+      Quit,
+      Move { x: i32, y: i32 },
+      Write(String),
+      ChangeColor(i32, i32, i32),
+  }
+
+  let msg1 = Message::Quit;
+  let msg2 = Message::Move { x: 10, y: 20 };
+  let msg3 = Message::Write(String::from("hello"));
+  let msg4 = Message::ChangeColor(255, 0, 0);
+  ```
+
+- **Using Enums with `match`**:
+  ```rust
+  match msg1 {
+      Message::Quit => println!("Quit variant"),
+      Message::Move { x, y } => println!("Move to ({}, {})", x, y),
+      Message::Write(text) => println!("Text message: {}", text),
+      Message::ChangeColor(r, g, b) => println!("Change color to ({}, {}, {})", r, g, b),
+  }
+  ```
+
+#### Option Type
+- **Definition**: Represents a value that can be either something or nothing.
+- **Variants**: `Some(T)` and `None`.
+- **Usage**:
+  ```rust
+  let some_number = Some(5);
+  let some_string = Some("a string");
+
+  let absent_number: Option<i32> = None;
+  ```
+
+- **Handling `Option` with `match`**:
+  ```rust
+  let x: Option<i32> = Some(5);
+  match x {
+      Some(value) => println!("Value: {}", value),
+      None => println!("No value"),
+  }
+  ```
+
+#### Result Type
+- **Definition**: Represents either success (`Ok`) or failure (`Err`).
+- **Variants**: `Ok(T)` and `Err(E)`.
+- **Usage**:
+  ```rust
+  fn divide(numerator: f64, denominator: f64) -> Result<f64, String> {
+      if denominator == 0.0 {
+          Err(String::from("Cannot divide by zero"))
+      } else {
+          Ok(numerator / denominator)
+      }
+  }
+
+  let result = divide(4.0, 2.0);
+  match result {
+      Ok(value) => println!("Result: {}", value),
+      Err(err) => println!("Error: {}", err),
+  }
+  ```
+
+## Error Handling in Rust
+
+#### Introduction to Error Handling
+- Rust distinguishes between recoverable and unrecoverable errors.
+- **Recoverable Errors**: Represented by the `Result` type.
+- **Unrecoverable Errors**: Represented by the `panic!` macro.
+
+#### The `Result` Type
+- **Definition**: Used for functions that can return an error.
+- **Variants**:
+  - `Ok(T)` for successful results.
+  - `Err(E)` for errors.
+
+```rust
+fn divide(numerator: f64, denominator: f64) -> Result<f64, String> {
+    if denominator == 0.0 {
+        Err(String::from("Cannot divide by zero"))
+    } else {
+        Ok(numerator / denominator)
+    }
+}
+```
+
+- **Using `Result`**:
+  - Match Expressions:
+    ```rust
+    match divide(4.0, 2.0) {
+        Ok(value) => println!("Result: {}", value),
+        Err(err) => println!("Error: {}", err),
+    }
+    ```
+  - Methods on `Result`:
+    - `unwrap()`: Returns the value if `Ok` or panics if `Err`.
+      ```rust
+      let result = divide(4.0, 2.0).unwrap();
+      ```
+    - `expect(msg)`: Similar to `unwrap()` but with a custom error message.
+      ```rust
+      let result = divide(4.0, 0.0).expect("Division failed");
+      ```
+
+#### The `Option` Type
+- **Definition**: Used for values that may be absent.
+- **Variants**:
+  - `Some(T)` for present values.
+  - `None` for absent values.
+
+```rust
+let some_number = Some(5);
+let absent_number: Option<i32> = None;
+```
+
+- **Using `Option`**:
+  - Match Expressions:
+    ```rust
+    match some_number {
+        Some(value) => println!("Value: {}", value),
+        None => println!("No value"),
+    }
+    ```
+  - Methods on `Option`:
+    - `unwrap()`: Returns the value if `Some` or panics if `None`.
+      ```rust
+      let number = some_number.unwrap();
+      ```
+    - `expect(msg)`: Similar to `unwrap()` but with a custom error message.
+      ```rust
+      let number = absent_number.expect("No value found");
+      ```
+
+#### The `panic!` Macro
+- **Definition**: Used for unrecoverable errors that require the program to stop execution.
+- **Usage**:
+  ```rust
+  panic!("Something went wrong!");
+  ```
+
+- **Backtraces**: When a panic occurs, Rust prints a backtrace to help locate the source of the error. Enable backtraces by setting the `RUST_BACKTRACE` environment variable.
+  ```sh
+  export RUST_BACKTRACE=1
+  ```
+
+#### Error Propagation
+- **Using `?` Operator**: Simplifies error propagation in functions that return `Result`.
+  ```rust
+  fn read_username_from_file() -> Result<String, io::Error> {
+      let mut file = File::open("hello.txt")?;
+      let mut username = String::new();
+      file.read_to_string(&mut username)?;
+      Ok(username)
+  }
+  ```
+
+- **Example with `?` Operator**:
+  ```rust
+  use std::fs::File;
+  use std::io::{self, Read};
+
+  fn read_username_from_file() -> Result<String, io::Error> {
+      let mut f = File::open("hello.txt")?;
+      let mut s = String::new();
+      f.read_to_string(&mut s)?;
+      Ok(s)
+  }
+  ```
+
