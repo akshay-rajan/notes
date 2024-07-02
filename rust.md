@@ -504,8 +504,8 @@ Rust provides powerful and flexible collection types in its standard library. Th
   ```
 - **String Slices**:
   ```rust
-  let hello = "Здравствуйте";
-  let s = &hello[0..4]; // s will be "Зд"
+  let hello = "helloworld";
+  let s = &hello[0..5]; // s will be "hello"
   ```
 
 #### Hash Maps
@@ -561,7 +561,7 @@ Rust provides powerful and flexible collection types in its standard library. Th
 - **Array Slices**:
   ```rust
   let a = [1, 2, 3, 4, 5];
-  let slice = &a[1..3];
+  let slice = &a[1..3]; // [2, 3]
   ```
 
 ## Generics, Traits, and Lifetimes
@@ -665,4 +665,103 @@ fn first_word(s: &str) -> &str {
       }
   }
   ```
+
+## Concurrency in Rust
+
+#### Introduction to Concurrency
+- Concurrency allows multiple computations to happen at the same time.
+- Rust's concurrency model ensures memory safety without needing a garbage collector.
+
+#### Threads
+- **Definition**: Threads allow multiple parts of a program to run simultaneously.
+- **Creating Threads**:
+  ```rust
+  use std::thread;
+  use std::time::Duration;
+
+  let handle = thread::spawn(|| {
+      for i in 1..10 {
+          println!("hi number {} from the spawned thread!", i);
+          thread::sleep(Duration::from_millis(1));
+      }
+  });
+
+  for i in 1..5 {
+      println!("hi number {} from the main thread!", i);
+      thread::sleep(Duration::from_millis(1));
+  }
+
+  handle.join().unwrap();
+  ```
+
+#### Message Passing
+- **Definition**: Threads communicate by sending messages to each other.
+- **Using Channels**:
+  ```rust
+  use std::sync::mpsc;
+  use std::thread;
+
+  let (tx, rx) = mpsc::channel();
+
+  thread::spawn(move || {
+      let val = String::from("hi");
+      tx.send(val).unwrap();
+  });
+
+  let received = rx.recv().unwrap();
+  println!("Got: {}", received);
+  ```
+
+#### Shared State Concurrency
+- **Definition**: Threads share memory to communicate.
+- **Using `Mutex`**:
+  ```rust
+  use std::sync::{Arc, Mutex};
+  use std::thread;
+
+  let counter = Arc::new(Mutex::new(0));
+  let mut handles = vec![];
+
+  for _ in 0..10 {
+      let counter = Arc::clone(&counter);
+      let handle = thread::spawn(move || {
+          let mut num = counter.lock().unwrap();
+          *num += 1;
+      });
+      handles.push(handle);
+  }
+
+  for handle in handles {
+      handle.join().unwrap();
+  }
+
+  println!("Result: {}", *counter.lock().unwrap());
+  ```
+
+#### Atomics and Lock-free Programming
+- **Definition**: Low-level concurrency primitives for fine-grained control.
+- **Using `Atomic` Types**:
+  ```rust
+  use std::sync::atomic::{AtomicUsize, Ordering};
+  use std::thread;
+
+  let counter = AtomicUsize::new(0);
+  let handles: Vec<_> = (0..10).map(|_| {
+      thread::spawn(|| {
+          for _ in 0..1000 {
+              counter.fetch_add(1, Ordering::SeqCst);
+          }
+      })
+  }).collect();
+
+  for handle in handles {
+      handle.join().unwrap();
+  }
+
+  println!("Result: {}", counter.load(Ordering::SeqCst));
+  ```
+
+#### `Send` and `Sync` Traits
+- **`Send` Trait**: Types that can be transferred across thread boundaries.
+- **`Sync` Trait**: Types that can be referenced from multiple threads.
 
