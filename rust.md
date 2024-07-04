@@ -67,10 +67,19 @@ The *hello_world/src/main.rs* is our source file.
   ```
   - Arrays: Fixed size, same type.
   ```rust
-  let arr: [i32; 3] = [1, 2, 3];
+  let arr: [i32; 3] = [0, 1, 2, 3];
   let first = arr[0];
   println!("Array: {:?}", arr);
+  let slice = &arr[1 .. 3]; // Slicing, [1, 2], size unknown
+  println!("Length of slice: {}", slice.len());
   ```
+
+- **Strings**
+  ```rust
+  let mut string: String = String::from("Hello, ");
+  string.push("world!");
+  ```
+
 
 #### Functions
 - **Defining Functions**: Use the `fn` keyword.
