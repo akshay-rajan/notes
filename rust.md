@@ -25,7 +25,11 @@ Rust is a systems programming language that runs blazingly fast, prevents segfau
   cargo run
   ```
   - `cargo new`: Creates a new Rust project.
+  - `cargo build`: Builds the project.
   - `cargo run`: Builds and runs the project.
+
+The *hello_world/src/main.rs* is our source file.
+*hello_world/Cargo.toml* is the package management file for the project, where we will list our dependencies.
 
 ## Basic Syntax and Core Concepts in Rust
 
