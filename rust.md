@@ -70,7 +70,7 @@ The *hello_world/src/main.rs* is our source file.
   let arr: [i32; 3] = [0, 1, 2, 3];
   let first = arr[0];
   println!("Array: {:?}", arr);
-  let slice = &arr[1 .. 3]; // Slicing, [1, 2], size unknown
+  let slice = &arr[1..3]; // Slicing, [1, 2], size unknown
   println!("Length of slice: {}", slice.len());
   ```
 
@@ -129,6 +129,9 @@ The *hello_world/src/main.rs* is our source file.
   let arr = [10, 20, 30];
   for element in arr {
       println!("The value is: {}", element);
+  }
+  for i in 0..6 {
+    print!("{}", i);
   }
   ```
 
@@ -277,6 +280,26 @@ fn main() {
       email: String::from("another@example.com"),
       ..user1
   };
+  ```
+
+- **Implementing a Struct**
+  ```rust
+  struct Weapon {
+    name: String,
+    damage: i32,
+    rounds: i32
+  }
+  impl Weapon {
+    fn details(&self) {
+      println!("Name: {}", self.name);
+    }
+  }
+  let ak = Weapon {
+    name: String::from("AK 47"),
+    damage: 137,
+    capacity: 150
+  };
+  ak.details();
   ```
 
 #### Enums
