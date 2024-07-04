@@ -484,8 +484,8 @@ Rust provides powerful and flexible collection types in its standard library. Th
 - **Definition**: A growable array type, `Vec<T>`.
 - **Creating Vectors**:
   ```rust
-  let v: Vec<i32> = Vec::new();
-  let v = vec![1, 2, 3];
+  let v1: Vec<i32> = Vec::new();
+  let v2 = vec![1, 2, 3];
   ```
 - **Updating Vectors**:
   ```rust
