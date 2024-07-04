@@ -620,7 +620,7 @@ Rust provides powerful and flexible collection types in its standard library. Th
   - `T`: A placeholder for any type that implements the `PartialOrd` trait.
 
 #### Traits
-- **Definition**: Traits are Rust's way of defining shared behavior.
+- **Definition**: Traits are Rust's way of defining shared behavior. Rust does not support inheritance, but it supports interfaces through Traits.
 - **Syntax**:
   ```rust
   pub trait Summary {
@@ -638,7 +638,9 @@ Rust provides powerful and flexible collection types in its standard library. Th
 
   impl Summary for Article {
       fn summarize(&self) -> String {
-          format!("{}, by {} ({})", self.headline, self.author, self.location)
+          format!(
+            "{}, by {} ({})", self.headline, self.author, self.location
+          )
       }
   }
   ```
