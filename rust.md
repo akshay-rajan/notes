@@ -69,6 +69,7 @@ The *hello_world/src/main.rs* is our source file.
   ```rust
   let arr: [i32; 3] = [1, 2, 3];
   let first = arr[0];
+  println!("Array: {:?}", arr);
   ```
 
 #### Functions
