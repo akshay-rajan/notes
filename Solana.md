@@ -28,7 +28,9 @@ This is done using **TypeScript**.
 
 ## On-chain Development
 
-Each solana cluster: `mainnet-beta`, `testnet`, `devnet` or `localnet` is effectively a single computer with a globally synchronized state.
+Each solana cluster, `mainnet-beta`, `testnet`, `devnet` or `localnet` is effectively a single computer with a globally synchronized state.
+`devnet` is where we test our application, whereas `testnet` is for validators.
+
 Solana programs are most commonly written in Rust, typically with the **Anchor** Framework.
 The framework handle common tasks like redirecting incoming instructions to the right instruction handler, deserializing data for incoming transactions, verifying accounts etc.
 
@@ -59,8 +61,39 @@ Every **Instruction** contains
 
 The instructions in a transaction are processed *Atomically*.
 
+## Anchor
 
+Initialize a project:
+```sh
+anchor init demo
+```
+Build the project:
+```sh
+cd demo
+anchor build 
+```
+This would store the program keypair in `target/deploy`.
+> If the build fails, it's due to Anchor using an older version of rust (run `cargo-build-sbf --version`). 
+> To fix this, upgrade to a newer version of solana tools and rerun `build`.
+>```sh
+> solana-install init 1.18.18
+>```
+To obtain the public key, which is also included in the `programs/demo/src/lib.rs` file, run:
+```sh
+anchor keys list
+```
+Update the following part in the Anchor.toml file for deployment to the `devnet`:
+```toml
+[provider]
+cluster = "Devnet"
+```
+Now deploy the project:
+```sh
+anchor deploy
+```
+> This may fail due to insufficient balance. Hence, obtain free SOL using `solana airdrop 2` and then try again.
 
+> Run `solana address` to get the user account address, and `solana balance [address]` for viewing the amount of SOL in the account.
 ---
 
 - [SolDev](https://soldev.app/)
