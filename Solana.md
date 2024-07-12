@@ -24,6 +24,7 @@ This is done using **TypeScript**.
 - Transactions: A set of instructions that invoke solana programs. All modifications to onchain data happen through transactions.
 - SPL Tokens: All other tokens (fungible or non-fungible) on the Solana blockchain, except the native token SOL.
 - Wallets: Applications that store the secret key and secure transaction signing. e.g. *Phantom Wallet*
+- PDAs: 32 byte strings store accounts that are designed to be controlled by a specific program.
 
 ## On-chain Development
 
@@ -60,4 +61,9 @@ The instructions in a transaction are processed *Atomically*.
 
 
 
+---
 
+- [SolDev](https://soldev.app/)
+- [Solana Cookbook](https://solanacookbook.com/)
+- [Documentation](https://docs.solana.com/)
+- [Anchor](https://www.anchor-lang.com/docs/high-level-overview)
