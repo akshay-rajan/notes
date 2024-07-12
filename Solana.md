@@ -25,5 +25,20 @@ This is done using **TypeScript**.
 - SPL Tokens: All other tokens (fungible or non-fungible) on the Solana blockchain, except the native token SOL.
 - Wallets: Applications that store the secret key and secure transaction signing. e.g. *Phantom Wallet*
 
+## On-chain Development
+
+Each solana cluster: `mainnet-beta`, `testnet`, `devnet` or `localnet` is effectively a single computer with a globally synchronized state.
+Solana programs are most commonly written in Rust, typically with the **Anchor** Framework.
+The framework handle common tasks like redirecting incoming instructions to the right instruction handler, deserializing data for incoming transactions, verifying accounts etc.
+
+Each program is associated with an address, typically created during `anchor init`.
+It's stored in the `target/deploy` directory.
+
+**Instruction handlers** are crucial components of smart contracts which how the program should respond to specific instructions. 
+Instruction handlers are like HTTP route handlers, and incoming transactions are like HTTP requests.
+But instead of returning data, the handlers write their data to accounts on Solana.
+Programs can transfer SOL, which will end up in user wallet addresses.
+Programs store data as key-value pairs in Program-Derived Addresses (PDAs).
+
 
 
