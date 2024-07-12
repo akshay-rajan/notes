@@ -40,5 +40,24 @@ But instead of returning data, the handlers write their data to accounts on Sola
 Programs can transfer SOL, which will end up in user wallet addresses.
 Programs store data as key-value pairs in Program-Derived Addresses (PDAs).
 
+Native / Non-Anchor development requires manual serialization & deserialization of data, which is the process of converting, the data into a format that is easily stored or transmitted, and back.
+Solana uses the BORSH serializer.
+
+**Transactions** are made up of an array of instructions.
+Every transaction contains
+- An array of every account it intends to read or write
+- One or more instructions
+- A recent blockhash
+- One or more signatures
+
+`@solana/web3.js` simplifies this to just instructions and signatures.
+Every **Instruction** contains
+- The program ID of the intended program
+- An array of accounts involved
+- Instruction data
+
+The instructions in a transaction are processed *Atomically*.
+
+
 
 
