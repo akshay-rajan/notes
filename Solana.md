@@ -94,8 +94,13 @@ anchor deploy
 > This may fail due to insufficient balance. Hence, obtain free SOL using `solana airdrop 2` and then try again.
 
 > Run `solana address` to get the user account address, and `solana balance [address]` for viewing the amount of SOL in the account.
----
 
+The following command deploys after running tests located in `/tests/demo.ts`:
+```sh
+anchor test
+```
+
+---
 - [SolDev](https://soldev.app/)
 - [Solana Cookbook](https://solanacookbook.com/)
 - [Documentation](https://docs.solana.com/)
