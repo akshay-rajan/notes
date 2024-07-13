@@ -61,7 +61,10 @@ Every **Instruction** contains
 
 The instructions in a transaction are processed *Atomically*.
 
-## Anchor
+# Anchor
+
+Anchor is a **framework** for building Solana programs.
+Anchor programs are written in Rust, and the framework compiles them into Solana programs.
 
 Initialize a project:
 ```sh
@@ -100,7 +103,60 @@ The following command deploys after running tests located in `/tests/demo.ts`:
 anchor test
 ```
 
-### Client-side Anchor development
+## Anchor Program
+
+Anchor uses `macros` and `traits` to generate boilerplate code.
+The main macros and traits include:
+- `declare_id`: To declare the on-chain address of the program.
+  ```rust
+  declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
+  ```
+  
+- `#[program]`: macro denoting the module containing instruction logic.
+  ```rust
+  #[program]
+  mod program_module_name {
+    use super::*;
+
+    // Each public function inside a module with #[program] attribute macro
+    // will be treated as a separate instruction.
+    pub fn instruction_one(ctx: Context<InstructionAccounts>, instruction_data: u64) -> Result<()> {
+		ctx.accounts.account_name.data = instruction_data;
+        Ok(())
+    }
+  }
+  ```
+  - The **Context** argument, `ctx` enables us to access the instruction metadata (`ctx.program_id`) and accounts (`ctx.accounts`) passed to the instruction handler.
+
+- `Accounts`: a trait applied to structs denoting the list of accounts required for an instruction.
+
+  ```rust
+  #[derive(Accounts)]
+  pub struct InstructionAccounts {
+    // InstructionAccounts struct includes 3 accounts: 
+    // account_name (Account), user (Signer), system_program (Program)
+
+    // Constraints for each field is provided using #[account(...)]
+    // 'Account' verifies program ownership
+    #[account(init, payer = user, space = 8 + 8)] 
+    pub account_name: Account<'info, AccountStruct>,
+    // 'Signer' validates the transaction
+    #[account(mut)]
+    pub user: Signer<'info>,
+    // 'Program' validates that the account is a program
+    pub system_program: Program<'info, System>,
+  }
+  ```
+- `#[account]`: an attribute macro used to define custom Solana account types. It enables *serialization* and *deserialization*.
+  ```rust
+  #[account]
+  pub struct AccountStruct {
+      data: u64
+  }
+  ```
+
+
+## Client-Side Anchor Development
 
 An IDL (Interface Description Language) file must be created at `/target/idl/`, which represents the structure of a program.
 To interact with an Anchor program on the client-side, we use the `@coral-xyz/anchor` typescript client.
