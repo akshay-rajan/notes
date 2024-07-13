@@ -130,13 +130,64 @@ Add the IDL to the root of our client-side project and import it to `demo-fronte
 ```tsx
 import idl from "../idl.json"
 ```
+Next, setup wallet and connection:
+```tsx
+import { useAnchorWallet, useConnection } from "@solana/wallet-adapter-react"
+
+const { connection } = useConnection()
+const wallet = useAnchorWallet()
+```
+Now set up the `Provider`:
+```tsx
+import { AnchorProvider, setProvider } from "@coral-xyz/anchor"
+
+const provider = new AnchorProvider(connection, wallet, {})
+setProvider(provider)
+```
+Create an instance of `Program`:
+```tsx
+import { Program, Idl, AnchorProvider, setProvider } from "@coral-xyz/anchor"
+
+const programId = new PublicKey("5ydvbN6hFgsnK3m8uszNGD9fS69tUyGv96MtLVYBh4bC")
+const program = new Program(idl as Idl, programId)
+```
+Once the program object is set up, we can use the Anchor `MethodsBuilder` to build instructions and transactions related to the program.
+```tsx
+// Send Transaction
+await program.methods
+  .instructionName(instructionDataInputs) // Call the method on the Rust app
+  .accounts({}) // Accounts expected by the method based on the IDL
+  .signers([]) // (Optional) Additional signers
+  .rpc() // Create and send transaction, return TransactionSignature
+  // Wallet from Provider is automatically included while using 'rpc()'
+```
+
+```tsx
+// Create first instruction
+const instructionOne = await program.methods
+  .instructionOneName(instructionOneDataInputs)
+  .accounts({})
+  .instruction()
+
+// Create second instruction
+const instructionTwo = await program.methods
+  .instructionTwoName(instructionTwoDataInputs)
+  .accounts({})
+  .instruction()
+
+// Add both instructions to a single transaction
+const transaction = new Transaction().add(instructionOne, instructionTwo)
+
+// Send transaction
+await sendTransaction(transaction, connection)
+```
 
 
 
 
 
 
-
+> Note that, client side uses `PascalCase`, whereas for the on-chain code in Rust, `snake_case` is used.
 
 ---
 - [SolDev](https://soldev.app/)
