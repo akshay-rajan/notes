@@ -100,6 +100,44 @@ The following command deploys after running tests located in `/tests/demo.ts`:
 anchor test
 ```
 
+### Client-side Anchor development
+
+An IDL (Interface Description Language) file must be created at `/target/idl/`, which represents the structure of a program.
+To interact with an Anchor program on the client-side, we use the `@coral-xyz/anchor` typescript client.
+
+The `Program` instance represents a Solana program and provides a custom API for reading and writing to the program.
+To create it, we need
+- IDL file
+- `Connection` (to the cluster)
+- `Wallet` (keypair for payment and signing)
+- `ProgramId`
+
+![program](files/anchor-Program.png)
+
+The Anchor `Provider` object combines a connection to a cluster and a wallet to enable transaction signing.
+The `MethodsBuilder` instance provides an interface through `Program` for building instructions and transactions.
+
+Create a new frontend project:
+```sh
+npx create-react-app demo-frontend --template typescript
+```
+```sh
+npm install # Install dependencies
+npm run dev # Start the development server
+```
+
+Add the IDL to the root of our client-side project and import it to `demo-frontend/components/Initialize.tsx` via
+```tsx
+import idl from "../idl.json"
+```
+
+
+
+
+
+
+
+
 ---
 - [SolDev](https://soldev.app/)
 - [Solana Cookbook](https://solanacookbook.com/)
