@@ -81,9 +81,10 @@ This would store the program keypair in `target/deploy`.
 >```sh
 > solana-install init 1.18.18
 >```
-To obtain the public key, which is also included in the `programs/demo/src/lib.rs` file, run:
+To obtain the public key and to update it in the program, run:
 ```sh
 anchor keys list
+anchor keys sync
 ```
 Update the following part in the Anchor.toml file for deployment to the `devnet`:
 ```toml
