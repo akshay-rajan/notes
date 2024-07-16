@@ -247,6 +247,7 @@ await sendTransaction(transaction, connection)
 > Note that, client side uses `PascalCase`, whereas for the on-chain code in Rust, `snake_case` is used.
 
 ---
+- [Solana Playground](https://beta.solpg.io/)
 - [SolDev](https://soldev.app/)
 - [Solana Cookbook](https://solanacookbook.com/)
 - [Documentation](https://docs.solana.com/)
