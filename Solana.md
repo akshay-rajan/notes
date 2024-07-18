@@ -239,8 +239,10 @@ const transaction = new Transaction().add(instructionOne, instructionTwo)
 await sendTransaction(transaction, connection)
 ```
 
-
-
+The transactions can be inspected at:
+```
+  https://explorer.solana.com/tx/<transaction_id>?cluster=devnet
+```
 
 
 
