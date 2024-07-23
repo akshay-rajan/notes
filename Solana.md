@@ -244,9 +244,37 @@ The transactions can be inspected at:
   https://explorer.solana.com/tx/<transaction_id>?cluster=devnet
 ```
 
-
-
 > Note that, client side uses `PascalCase`, whereas for the on-chain code in Rust, `snake_case` is used.
+
+## SPL Tokens 
+
+SPL(Solana Program Library) tokens are fungible / non-fungible tokens built on the Solana blockchain.
+
+For interacting with an SPL token, install the command line utility:
+```bash
+cargo install spl-token-cli
+```
+To create a token, run:
+```bash
+spl-token create-token
+```
+which will return the **token identifier** and the token signature.
+To check the balance of tokens for the current address:
+```bash
+spl-token supply <token-identifier>
+```
+Now we can mint some new tokens via:
+```bash
+spl-token mint <token-identifier> <token-amount>
+```
+To get a tokens and your balance, run: 
+```bash
+spl-token accounts
+```
+To send our SPL tokens, do:
+```bash
+spl-token transfer <token-identifier> <token-amount> <wallet-address> --fund-recipient
+```
 
 ---
 - [Solana Playground](https://beta.solpg.io/)
@@ -255,3 +283,4 @@ The transactions can be inspected at:
 - [Documentation](https://docs.solana.com/)
 - [Anchor](https://www.anchor-lang.com/docs/high-level-overview)
 - [QuickNode Guide](https://www.quicknode.com/guides/solana-development/getting-started/solana-fundamentals-reference-guide)
+- [Token Maker](https://token-creator-lac.vercel.app/)
